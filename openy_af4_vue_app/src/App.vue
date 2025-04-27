@@ -382,6 +382,7 @@ export default {
       canLoadData: true,
       // Search parameters of the last request casted to string primitive.
       lastRequestParamsString: '',
+      initialLoad: true,
       // Indicates if we are working with Daxko backend.
       daxko: false,
       daxkoPages: [],
@@ -630,7 +631,12 @@ export default {
 
       this.canLoadData = true
 
-      // Scroll to view.
+      // Scroll to top on step change, except on initial load if step is 'results'
+      if (this.initialLoad && val === 'results') {
+        this.initialLoad = false
+        return
+      }
+
       document.getElementById('activity-finder-app').scrollIntoView(true)
     },
     selectedPage() {
